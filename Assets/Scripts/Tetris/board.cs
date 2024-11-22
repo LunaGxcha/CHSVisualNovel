@@ -53,7 +53,7 @@ public class Board : MonoBehaviour
     {
         tilemap.ClearAllTiles();
 
-        // Do anything else you want on game over here..
+        // Do anything else you want on game over here. Probably change back to a scene. Add an if statement :D
     }
 
     public void Set(Piece piece)
