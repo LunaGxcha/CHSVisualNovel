@@ -16,15 +16,16 @@ double pos8 = 8;
 double pos9 = 9;
 // Checks if all pieces are in the correct position (also placeholders)
 bool completionCheck = piece1pos == pos1 && piece2pos == pos2 && piece3pos == pos3 && piece4pos == pos4 && piece5pos == pos5 && pice6pos == pos6 && piece7pos == pos7 && piece8pos == pos8 && piece9pos == pos9;
+Console.WriteLine("ROBOT REPAIR!");
 //timer(maybe)
 using System.Timers;
-int x = 30;
+int clock = 30;
 // increased by 1 each second and prints value
 for (x > 0, --)
 {
     Console.WriteLine(x);
     wait(1000);
-    if (x == 0)
+    if (clock == 0)
     {
         Console.WriteLine("TIME END");// prints when timer ends
         Wait(2000);
@@ -39,6 +40,6 @@ for (x > 0, --)
     }
 }
 //Can't confirm if this works or not
-//I still miss Lua :(
+//I still miss Lua :(  (luke) 
 }
 }
