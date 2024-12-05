@@ -1,45 +1,52 @@
-using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-class Program
-{
-static void Main(string[] args)
-{
-//Grid positions for each piece (Placeholders for now, will be changed later)
-double pos1 = 1;
-double pos2 = 2;
-double pos3 = 3;
-double pos4 = 4;
-double pos5 = 5;
-double pos6 = 6;
-double pos7 = 7;
-double pos8 = 8;
-double pos9 = 9;
-// Checks if all pieces are in the correct position (also placeholders)
-bool completionCheck = piece1pos == pos1 && piece2pos == pos2 && piece3pos == pos3 && piece4pos == pos4 && piece5pos == pos5 && pice6pos == pos6 && piece7pos == pos7 && piece8pos == pos8 && piece9pos == pos9;
-Console.WriteLine("ROBOT REPAIR!");
-//timer(maybe)
-using System.Timers;
-int clock = 30;
-// increased by 1 each second and prints value
-for (clock > 0, --)
-{
-    Console.WriteLine(clock);
-    wait(1000);
-    if (clock == 0)
-    {
-        Console.WriteLine("TIME END");// prints when timer ends
-        Wait(2000);
-        if (completionCheck == true)        
-        {
-            Console.Write("GAME CLEAR!");//ifCorrect(Ashraful)
-        }
-        else
-        {
-            Console.WriteLine("GAME FAIL...");//ifFail(Ashraful)
+public class GameManager : monoBehaviour {
+[SerializeField] private Transform gameTransform;
+[SerializeField] private Transform piecePrefab;
+
+private int emptyLocation;
+private int size;
+
+// create the game setup with size x size pieces
+private void CreateGamePieces(float gapThickness) {
+// this is the width of each file
+float width = 1 / (float)size;
+for(int row = 0; row < size; row++) {
+    for (int col = 0; col < size; col ++) {
+        Transform piece = Instantiate(piecePrefab, gameTransform);
+        // pieces will be in a game bord going from -1 to +1
+        piece.localPosition = new Vector2(-1 + (2 * width * col) + width, +1 - (2 * width * row) - width);
+        piece.localScale = ((2 * width) - gapThickness) * Vector2.one;
+        piece.name = $"{(row * size) + col}";
+        // we want an empty space in the bottom right
+        if ((row == size -1) && (col == size - 1)) {
+            emptyLocation = (size * size) - 1;
+            piece.gameObject.SetActive(false);
+        }else {
+        // we want to map the UV coordinates appropriately, they are 0->1
+        float gap = gapThickness / 2;
+        Mesh mesh = piece.GetComponent<MeshFilter>().mesh;
+        Vector[] uv = new Vector2[4];
+        // UV coord order: (0,1) (1,1) (0,0) (1,0)
+        uv[0] = new Vector2((width * col) + gap, 1 - ((width *(row + 1))- gap));
+        uv[1] = new Vector2((width*(col + 1)) - gap, 1 - ((width * (row + 1)) - gap));
+        uv[2] = new Vector2((width * col) + gap, 1 - ((width * row) + gap));
+        uv[3] = new Vector2((width * (col + 1)) - gap, 1 - ((width * row) + gap));
         }
     }
 }
-//Can't confirm if this works or not
-//I still miss Lua :(  (luke) 
+
 }
+
+
+
+// start is called before the first frame update
+void Start() {
+    size = 3;
+    CreateGamePieces(0.01f);
+    
+}
+
 }
