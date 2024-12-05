@@ -21,9 +21,9 @@ Console.WriteLine("ROBOT REPAIR!");
 using System.Timers;
 int clock = 30;
 // increased by 1 each second and prints value
-for (x > 0, --)
+for (clock > 0, --)
 {
-    Console.WriteLine(x);
+    Console.WriteLine(clock);
     wait(1000);
     if (clock == 0)
     {
