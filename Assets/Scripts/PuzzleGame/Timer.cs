@@ -1,3 +1,6 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using TMpro;
 
 public class Timer : MonoBehaviour 
@@ -17,8 +20,9 @@ void Update()
         //GameOver();
         timerText.color = Color.red;
     }
-}
-int minutes = Mathf.FloorToInt(remainingTime / 60);
+    int minutes = Mathf.FloorToInt(remainingTime / 60);
 int seconds = Mathf.FloorToInt(remaningTime % 60);
 timertext.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+}
+
 }
