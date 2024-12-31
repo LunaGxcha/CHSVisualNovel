@@ -29,25 +29,25 @@ public class Scene02Events : MonoBehaviour
     
     yield return new WaitForSeconds(2);
     TextBoxOne.SetActive(true);
-    yield return new WaitForSeconds(4);
+    yield return new WaitFor(Input.GetMouseButtonDown(0));
     TextBoxOne.SetActive(false);
      yield return new WaitForSeconds(2);
     TextBox2.SetActive(true);
-    yield return new WaitForSeconds(4);
+    yield return new WaitFor(Input.GetMouseButtonDown(0));
     TextBox2.SetActive(false);
      yield return new WaitForSeconds(2);
     TextBox3.SetActive(true);
-    yield return new WaitForSeconds(4);
+    yield return new WaitFor(Input.GetMouseButtonDown(0));
     TextBox3.SetActive(false);
      yield return new WaitForSeconds(2);
      // if poster is chosen
     TextBox4.SetActive(true);
-    yield return new WaitForSeconds(4);
+    yield return new WaitFor(Input.GetMouseButtonDown(0));
     TextBox4.SetActive(false);
      yield return new WaitForSeconds(2);
      //if door is chosen
     TextBox5.SetActive(true);
-    yield return new WaitForSeconds(4);
+    yield return new WaitFor(Input.GetMouseButtonDown(0));
     TextBox5.SetActive(false);
 
 
