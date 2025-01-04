@@ -6,7 +6,7 @@ using TMPro;
 
 public class Timer : MonoBehaviour
 {
-    float currentTime;
+    public float currentTime;
     public float startingTime = 10f;
 
       [SerializeField] TextMeshProUGUI countdownText;
