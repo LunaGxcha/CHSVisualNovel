@@ -1,57 +1,84 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
-public class Scene02Events : MonoBehaviour
-{ 
-    public GameObject fadeinscreen;
-    public GameObject MC;
-    public GameObject classA;
-    public GameObject TextBoxOne;
-    public GameObject TextBox2;
-    public GameObject TextBox3;
-    public GameObject TextBox4;
-    public GameObject TextBox5;
 
-    [SerializeField] string textToSpeak
+public class textCode : MonoBehaviour
 
+{
+    public TextMeshProUGUI textComponent;
+    public string[] lines;
+    public float textSpeed;
+    private int index;
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
+   
+    
     void Start()
     {
-        StartCoroutine(EventStart());
+        textComponent.text = string.Empty;
+        StartDialogue(); 
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if(Input.GetMouseButtonDown(0))
+        {
+            if(textComponent.text == lines[index])
+            {
+                NextLine();
+            }
+            else
+            {
+                StopAllCoroutines();
+                textComponent.text = lines[index];
+
+            }
+        }
+    }
+
+    void StartDialogue()
+    {
+        index = 0;
+        StartCoroutine(TypeLine());
 
 
     }
 
-   IEnumerator EventStart()
-   {
-    yield return new WaitForSeconds(10);
-    fadeinscreen.SetActive(false);
+    IEnumerator TypeLine()
+    {
+        foreach (char c in lines[index].ToCharArray())
+        {
+
+          textComponent.text += c;
+          yield return new WaitForSeconds(textSpeed);  
+        }
     
-    yield return new WaitForSeconds(2);
-    TextBoxOne.SetActive(true);
-    yield return new WaitFor(Input.GetMouseButtonDown(0));
-    TextBoxOne.SetActive(false);
-     yield return new WaitForSeconds(2);
-    TextBox2.SetActive(true);
-    yield return new WaitFor(Input.GetMouseButtonDown(0));
-    TextBox2.SetActive(false);
-     yield return new WaitForSeconds(2);
-    TextBox3.SetActive(true);
-    yield return new WaitFor(Input.GetMouseButtonDown(0));
-    TextBox3.SetActive(false);
-     yield return new WaitForSeconds(2);
-     // if poster is chosen
-    TextBox4.SetActive(true);
-    yield return new WaitFor(Input.GetMouseButtonDown(0));
-    TextBox4.SetActive(false);
-     yield return new WaitForSeconds(2);
-     //if door is chosen
-    TextBox5.SetActive(true);
-    yield return new WaitFor(Input.GetMouseButtonDown(0));
-    TextBox5.SetActive(false);
 
-
-
+ 
    }
 
+   void NextLine()
+    {
+        if (index < lines.Length - 1)
+        {
+            index++;
+            textComponent.text = string.Empty;
+            StartCoroutine(TypeLine());
+        }
+         else  
+         {
+            gameObject.SetActive(false);
+         }  
+    }   
+
+
+
+
 }
+
+  
+
+
