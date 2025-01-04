@@ -1,15 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using Unity.VisualScripting;
+using Unity.VisualScripting.Antlr3.Runtime;
+using UnityEditor;
+using UnityEngine.U2D;
+using UnityEditor.SceneManagement;
 
 public class GameManager : MonoBehaviour {
   [SerializeField] private Transform gameTransform;
   [SerializeField] private Transform piecePrefab;
-
+  [SerializeField] TextMeshProUGUI countdownText;
+  [SerializeField] private GameObject reference1;
+  [SerializeField] private GameObject reference2;
   private List<Transform> pieces;
   private int emptyLocation;
   private int size;
   private bool shuffling = false;
+  private bool debounce = false;
+
+  public float currentTime;
+  public int puzzlesSolved = 0;
 
   // Create the game setup with size x size pieces.
   private void CreateGamePieces(float gapThickness) {
@@ -65,7 +77,7 @@ public class GameManager : MonoBehaviour {
     // On click send out ray to see if we click a piece.
     if (Input.GetMouseButtonDown(0)) {
       RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-      if (hit) {
+      if (hit && countdownText.text != "0") {
         // Go through the list, the index tells us the position.
         for (int i = 0; i < pieces.Count; i++) {
           if (pieces[i] == hit.transform) {
@@ -102,7 +114,19 @@ public class GameManager : MonoBehaviour {
         return false;
       }
     }
+    if (debounce == false) {
+      debounce = true;
+      puzzlesSolved += 1;
+      if (puzzlesSolved == 1){
+        reference1.SetActive(false);
+        reference2.SetActive(true);
+        currentTime = 300f;
+      }
+    }
+    
+
     return true;
+    
   }
 
    private IEnumerator WaitShuffle(float duration) {
